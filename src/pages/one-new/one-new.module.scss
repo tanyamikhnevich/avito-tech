@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  margin: 5px;
+}
+
+.title {
+  padding: 10px;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 15pt;
+}
+
+.about {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.username {
+  margin-right: 10px;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 10pt;
+}
+

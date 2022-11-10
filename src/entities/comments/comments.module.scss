@@ -1,0 +1,26 @@
+.button {
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 10pt;
+  margin-bottom: 10px;
+}
+
+.comments {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid green;
+  margin: 5px;
+}
+
+.commentUser {
+  margin: 5px;
+}
+
+.commentsKids {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid red;
+  margin: 5px;
+}
