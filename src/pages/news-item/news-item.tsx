@@ -3,13 +3,14 @@ import { Link, useHistory, useParams } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../../features/hooks/hooks";
 import { getNewsById } from "../../store/news-store/action-creators";
-import { Comments } from "../../entities/comments/comments";
+import { Comments } from "../../widgets/comments/comments";
 
-import styles from "./one-new.module.scss";
+import styles from "./news-item.module.scss";
+import { PUBLIC_PATH } from "shared/config";
 
 // todo: сделать скрытие комента
 
-export const OneNew = () => {
+export const NewsItem = () => {
   const { id } = useParams<{ id?: string | undefined }>();
   const dispatch = useAppDispatch();
   const { oneNew } = useAppSelector((state) => state.news);
@@ -24,7 +25,7 @@ export const OneNew = () => {
 
   return (
     <div className={styles.container}>
-      <Link to={"/news"} className={styles.title}>
+      <Link to={PUBLIC_PATH.NEWS_LIST} className={styles.title}>
         To all news
       </Link>
       <h2 className={styles.title}>{oneNew.title}</h2>
