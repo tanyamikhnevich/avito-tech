@@ -1,2 +1,2 @@
-export * as NewsTypes from "./types";
-export * as newsApi from "./api";
+export * as CommentsTypes from "./types";
+export * as commentsApi from "./api";

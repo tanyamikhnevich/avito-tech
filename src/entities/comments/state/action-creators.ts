@@ -1,29 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { newsApi } from "../api";
-import { INewsItem } from "./types";
+import { commentsApi } from "../api";
+import { type GetByIdActionReturnT } from "./types";
 
-export const getAllNews = createAsyncThunk<INewsItem[]>(
-  "news/all",
-  async (_, thunkAPI) => {
-    try {
-      const { data } = await newsApi.getNewsIds();
-
-      const promises = data.slice(0, 50).map((id) => newsApi.getById(id));
-      const res = await Promise.all(promises);
-
-      return res.map((res) => res.data);
-    } catch (e) {
-      return thunkAPI.rejectWithValue("Data not found");
-    }
-  }
-);
-
-export const getNewsById = createAsyncThunk<INewsItem, number>(
-  "news/one",
+export const getAllComments = createAsyncThunk<GetByIdActionReturnT, number>(
+  "comments/all",
   async (id: number, thunkAPI) => {
     try {
-      const { data } = await newsApi.getById(id);
-      return data;
+      const { data } = await commentsApi.getById(id);
+
+      const promises = data.kids.map((id) => commentsApi.getById(id));
+      const res = await Promise.all(promises);
+
+      return { id, comments: res.map((res) => res.data) };
     } catch (e) {
       return thunkAPI.rejectWithValue("Data not found");
     }

@@ -1,17 +1,11 @@
-import { AxiosResponse } from "axios";
-
-import { NewsTypes } from ".";
 import { api } from "shared/api/api";
+import { AxiosResponse } from "axios";
+import { CommentsTypes } from ".";
 
 export const getById = (
   id: number
-): Promise<AxiosResponse<NewsTypes.GetByIdResponse>> => {
-  return api.get<NewsTypes.GetByIdResponse>(`/item/${id}.json?print=pretty`);
+): Promise<AxiosResponse<CommentsTypes.GetByIdResponse>> => {
+  return api.get<CommentsTypes.GetByIdResponse>(
+    `/item/${id}.json?print=pretty`
+  );
 };
-
-export const getNewsIds = (): Promise<
-  AxiosResponse<NewsTypes.GetNewsIdsResponse>
-> => {
-  return api.get<NewsTypes.GetNewsIdsResponse>("/topstories.json?print=pretty");
-};
-// todo newstories

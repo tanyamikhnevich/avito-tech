@@ -1,13 +1,9 @@
 export interface GetByIdResponse {
   by: string;
-  descendants: number;
   id: number;
   kids: Array<number>;
-  score: number;
+  parent: number;
   time: number;
-  title: string;
+  text: string;
   type: string;
-  url: string;
 }
-
-export type GetNewsIdsResponse = number[];

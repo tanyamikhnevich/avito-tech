@@ -1,41 +1,18 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React from "react";
+import { CommentsTypes } from "entities/comments/api";
+import { Comment } from "widgets";
 
-import { useAppDispatch, useAppSelector } from "../../features/hooks/hooks";
-import { getAllComments } from "../../store/comments-store/action-creators";
-import { KidsComments } from "../kids-comments/kids-comments";
+interface Props {
+  comments: CommentsTypes.GetByIdResponse[];
+}
 
-import styles from "./comments.module.scss";
-
-export const Comments = () => {
-  const { id } = useParams<{ id?: string | undefined }>();
-  const dispatch = useAppDispatch();
-
-  const { comments, error, isLoading } = useAppSelector(
-    (state) => state.comments
-  );
-
-  useEffect(() => {
-    if (!id) return;
-    dispatch(getAllComments(Number(id)));
-    console.log("ghggh");
-  }, []);
-
+export const Comments = ({ comments }: Props) => {
   return (
-    <div>
-      {isLoading && <div>Loading ...</div>}
-      {error && <div>{error}</div>}
-
+    <div style={{ marginLeft: "30px", border: "3px solid red" }}>
       {comments.map(
         (comment) =>
           (comment.by || comment.text) && (
-            <div key={comment.id}>
-              <div className={styles.comments}>
-                <h5 className={styles.commentUser}>User: {comment.by}</h5>
-                <p className={styles.commentUser}>Comment: {comment.text}</p>
-                {comment.kids && <KidsComments comment={comment} />}
-              </div>
-            </div>
+            <Comment comment={comment} key={comment.id} />
           )
       )}
     </div>

@@ -1,8 +1,12 @@
-import { NewsTypes } from "..";
+import { CommentsTypes } from "..";
 
-export type INewsItem = NewsTypes.GetByIdResponse;
+export type IComment = CommentsTypes.GetByIdResponse;
 
-export interface INewsState {
-  news: INewsItem[];
-  displayedNewsItem: INewsItem | null;
+export interface ICommentsState {
+  comments: Record<string, IComment[]>;
+}
+
+export interface GetByIdActionReturnT {
+  id: number;
+  comments: IComment[];
 }

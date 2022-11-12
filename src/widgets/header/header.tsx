@@ -1,16 +1,20 @@
 import React from "react";
+import { Button, Group, Title } from "@mantine/core";
+
+import { useActions } from "features/hooks";
+
 import styles from "./header.module.scss";
-import { useAppDispatch } from "../../features/hooks/hooks";
-import { getAllNews } from "../../store/news-store/action-creators";
 
 export const Header = () => {
-  const dispatch = useAppDispatch();
+  const { getAllNews } = useActions();
+  function getNews() {
+    getAllNews();
+  }
+
   return (
-    <header className={styles.container}>
-      <h1 className={styles.title}>Fake News</h1>
-      <button onClick={() => dispatch(getAllNews())} className={styles.update}>
-        Update news
-      </button>
-    </header>
+    <Group position="apart">
+      <Title className={styles.title}>Fake News</Title>
+      <Button onClick={getNews}>Update news</Button>
+    </Group>
   );
 };

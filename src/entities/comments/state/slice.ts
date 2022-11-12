@@ -1,47 +1,38 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { newsActions as actions, NewsStateTypes } from ".";
+import { getAllComments } from "./action-creators";
 import {
+  fulfilled,
   type IReduxState,
   pending,
-  fulfilled,
   rejected,
 } from "shared/utils/redux";
+import type { ICommentsState } from "./types";
+import { GetByIdActionReturnT } from "./types";
 
-const initialState: NewsStateTypes.INewsState & IReduxState = {
-  news: [],
-  displayedNewsItem: null,
+const initialState: ICommentsState & IReduxState = {
+  comments: {},
   isLoading: false,
   error: "",
 };
 
-type NewsItemT = NewsStateTypes.INewsItem;
-
-const newsSlice = createSlice({
-  name: "news",
+const commentsSlice = createSlice({
+  name: "comments",
   initialState,
   reducers: {},
   extraReducers: {
-    [actions.getAllNews.pending.type]: pending,
-    [actions.getAllNews.fulfilled.type]: (
+    [getAllComments.pending.type]: pending,
+    [getAllComments.fulfilled.type]: (
       state,
-      action: PayloadAction<NewsItemT[]>
+      action: PayloadAction<GetByIdActionReturnT>
     ) => {
+      const { id, comments } = action.payload;
       fulfilled(state);
-      state.news = action.payload;
+      state.comments[id] = comments;
     },
-    [actions.getAllNews.rejected.type]: rejected,
-    [actions.getNewsById.pending.type]: pending,
-    [actions.getNewsById.fulfilled.type]: (
-      state,
-      action: PayloadAction<NewsItemT>
-    ) => {
-      fulfilled(state);
-      state.displayedNewsItem = action.payload;
-    },
-    [actions.getNewsById.rejected.type]: rejected,
+    [getAllComments.rejected.type]: rejected,
   },
 });
 
-export const {} = newsSlice.actions;
+export const {} = commentsSlice.actions;
 
-export default newsSlice.reducer;
+export default commentsSlice.reducer;
