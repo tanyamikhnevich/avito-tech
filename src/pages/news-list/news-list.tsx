@@ -1,37 +1,67 @@
 import React, { useEffect } from "react";
 
-import { Header } from "widgets/header/header";
+import { UpdateNewsButton } from "widgets";
 import { NewsCard } from "widgets/news-card/news-card";
-import { useAppSelector } from "features/hooks";
-import { useActions } from "features/hooks";
+import { useActions, useAppSelector } from "features/hooks";
+import "./news-list.css";
+import Masonry from "react-masonry-css";
+import { Loader } from "@mantine/core";
+import { motion } from "framer-motion";
 
 export const NewsList = () => {
   const { error, isLoading, news } = useAppSelector((state) => state.news);
-  const { getAllNews } = useActions();
+  const { getAllNews, updateAllNews } = useActions();
 
   useEffect(() => {
     getAllNews();
     const intervalNews = setInterval(() => {
-      getAllNews();
+      updateAllNews();
     }, 60000);
     return () => {
       clearInterval(intervalNews);
     };
   }, []);
+  const breakpointColumnsObj = {
+    default: 3,
+    900: 2,
+    300: 1,
+  };
+
+  if (news.length === 0 && isLoading) return <Loader color="red" size="xl" />;
+
+  const item = {
+    hidden: { opacity: 0, transition: { y: -300 } },
+    show: {
+      opacity: 1,
+      transition: {
+        y: 0,
+        delay: 0.5,
+      },
+    },
+  };
 
   return (
     <div>
-      <Header />
+      <UpdateNewsButton loading={isLoading} />
       {error && <div>{error}</div>}
-      {isLoading && <div>Loading ...</div>}
-      {news.map((news, index) => (
-        <NewsCard
-          index={index + 1}
-          key={news.id}
-          item={news}
-          data-testid="news-item"
-        />
-      ))}
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
+        {news.map((news, index) => (
+          <motion.div
+            key={news.id}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            variants={item}
+            initial="hidden"
+            animate="show"
+          >
+            <NewsCard index={index + 1} item={news} />
+          </motion.div>
+        ))}
+      </Masonry>
     </div>
   );
 };

@@ -1,9 +1,11 @@
 import { useHistory } from "react-router-dom";
 import { formatDistance } from "date-fns";
-
-import styles from "./news-card.module.scss";
+import { Avatar } from "../avatar/avatar";
 import { type NewsTypes } from "entities/news/api";
-import { Title, Text } from "@mantine/core";
+
+import { IconStar } from "@tabler/icons";
+import { Card, Group, Stack, Text, Title } from "@mantine/core";
+import { useStyles } from "./news-card.style";
 
 interface Props {
   index: number;
@@ -12,6 +14,7 @@ interface Props {
 
 export const NewsCard = ({ index, item }: Props) => {
   const { by, time, title, score, id } = item;
+  const { classes } = useStyles();
 
   const router = useHistory();
   let convertedTime = formatDistance(time * 1000, Date.now(), {
@@ -19,21 +22,33 @@ export const NewsCard = ({ index, item }: Props) => {
   });
 
   return (
-    <div onClick={() => router.push(`/${id}`)} className={styles.container}>
-      <Title order={3}>
-        {index}. {title}
-      </Title>
-      <div className={styles.about}>
-        <Text fs="italic" mr={10}>
-          Author: {by}
-        </Text>
-        <Text mr={10} fs="italic">
-          {score} points
-        </Text>
-        <Text mr={10} fs="italic">
-          {convertedTime}
-        </Text>
-      </div>
-    </div>
+    <Card
+      p="sm"
+      onClick={() => router.push(`/${id}`)}
+      className={classes.container}
+    >
+      <Stack p={8} align="stretch" justify="center">
+        <Title weight={500} order={3}>
+          {title}
+        </Title>
+        <Group spacing="xs">
+          <IconStar size={16} stroke={3} color="red" />
+          <Text size="sm" color="red" fs="italic" fw={700}>
+            {score} points
+          </Text>
+        </Group>
+        <Group>
+          <Avatar id={id} />
+
+          <Text size="sm" color="dimmed" fs="italic" fw={700}>
+            {by}
+          </Text>
+
+          <Text size="sm" color="dimmed" fs="italic">
+            {convertedTime}
+          </Text>
+        </Group>
+      </Stack>
+    </Card>
   );
 };

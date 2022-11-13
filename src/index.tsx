@@ -13,7 +13,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      <MantineProvider withGlobalStyles withNormalizeCSS>
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{ primaryColor: "red" }}
+      >
         <App />
       </MantineProvider>
     </Provider>

@@ -8,7 +8,7 @@ interface Props {
 
 export const Comments = ({ comments }: Props) => {
   return (
-    <div style={{ marginLeft: "30px", border: "3px solid red" }}>
+    <div>
       {comments.map(
         (comment) =>
           (comment.by || comment.text) && (

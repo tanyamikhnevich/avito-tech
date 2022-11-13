@@ -1,6 +1,6 @@
 import { NewsTypes } from "entities/news";
-
-import styles from "./news-description.module.scss";
+import { Avatar } from "../../../../widgets";
+import { Group, Stack, Text } from "@mantine/core";
 
 export const NewsDescription = ({
   item,
@@ -11,15 +11,24 @@ export const NewsDescription = ({
 
   return (
     <div>
-      <h2 className={styles.title}>{item.title}</h2>
-      <div className={styles.about}>
-        <h3 className={styles.username}>by {item.by}</h3>
-        <p className={styles.username}> {date.toLocaleDateString("ru-Ru")}</p>
-        <p className={styles.username}> {item.url}</p>
-        <p className={styles.username}>
-          Counts of comments: {item.descendants}
-        </p>
-      </div>
+      <Stack bg={"gray.2"} p={10}>
+        <Text weight={500} size={25}>
+          {item.title}
+        </Text>
+        <Text size={20}>{item.url}</Text>
+        <Group>
+          <Avatar id={item.id} />
+          <Text fw={600} fs="italic">
+            {item.by}
+          </Text>
+          <Text fw={600} fs="italic">
+            {date.toLocaleDateString("ru-Ru")}
+          </Text>
+        </Group>
+        <Text size={18} fs="italic">
+          See {item.descendants} comments
+        </Text>
+      </Stack>
     </div>
   );
 };

@@ -18,7 +18,11 @@ const initialState: ICommentsState & IReduxState = {
 const commentsSlice = createSlice({
   name: "comments",
   initialState,
-  reducers: {},
+  reducers: {
+    clearState(state) {
+      state.comments = {};
+    },
+  },
   extraReducers: {
     [getAllComments.pending.type]: pending,
     [getAllComments.fulfilled.type]: (
@@ -33,6 +37,6 @@ const commentsSlice = createSlice({
   },
 });
 
-export const {} = commentsSlice.actions;
+export const { clearState } = commentsSlice.actions;
 
 export default commentsSlice.reducer;

@@ -1,7 +1,6 @@
 .container {
   display: flex;
   flex-direction: column;
-  border: 2px solid black;
   margin: 5px;
 }
 
@@ -9,6 +8,11 @@
   padding: 10px;
   font-family: Verdana, Geneva, sans-serif;
   font-size: 15pt;
+}
+.link{
+  text-decoration: none;
+  color: white;
+  margin-left: 10px;
 }
 
 

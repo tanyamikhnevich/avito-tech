@@ -39,6 +39,15 @@ const newsSlice = createSlice({
       state.displayedNewsItem = action.payload;
     },
     [actions.getNewsById.rejected.type]: rejected,
+    [actions.updateAllNews.pending.type]: pending,
+    [actions.updateAllNews.fulfilled.type]: (
+      state,
+      action: PayloadAction<NewsItemT[]>
+    ) => {
+      fulfilled(state);
+      state.news = action.payload;
+    },
+    [actions.updateAllNews.rejected.type]: rejected,
   },
 });
 
