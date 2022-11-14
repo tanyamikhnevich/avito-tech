@@ -17,3 +17,10 @@ yarn start
 To Visit App:
 
 localhost:3000
+
+
+№ Reflection
+
+It was a weekly project created as a test task for the Avito team. The goals of the project included the use of technologies learned up to this point.
+
+This project implements React, React Router v5, Redux Toolkit, Axios, TypeScript and a significant amount of Mantine, TSX and CSS, Framer Motion technologies. I decided to use the create-react-app template to keep the initial setup to a minimum and spend more time diving into weird technological rabbit holes.
