@@ -31,7 +31,7 @@ This project implements:
 - Axios 
 - TypeScript 
 - methodology Feature Sliced
-- Mantine
+- UI library Mantine
 - Framer Motion 
 - API with avatars
 
