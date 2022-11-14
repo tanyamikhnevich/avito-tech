@@ -19,7 +19,7 @@ To Visit App:
 localhost:3000
 
 
-№ Reflection
+# Reflection
 
 It was a weekly project created as a test task for the Avito team. The goals of the project included the use of technologies learned up to this point.
 
