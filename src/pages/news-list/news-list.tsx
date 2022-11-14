@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
+import Masonry from "react-masonry-css";
+import { motion } from "framer-motion";
 
 import { UpdateNewsButton } from "widgets";
 import { NewsCard } from "widgets/news-card/news-card";
 import { useActions, useAppSelector } from "features/hooks";
+import { Loader } from "shared/ui";
+
 import "./news-list.css";
-import Masonry from "react-masonry-css";
-import { Loader } from "@mantine/core";
-import { motion } from "framer-motion";
 
 export const NewsList = () => {
   const { error, isLoading, news } = useAppSelector((state) => state.news);
@@ -21,13 +22,14 @@ export const NewsList = () => {
       clearInterval(intervalNews);
     };
   }, []);
+
   const breakpointColumnsObj = {
     default: 3,
     900: 2,
     300: 1,
   };
 
-  if (news.length === 0 && isLoading) return <Loader color="red" size="xl" />;
+  if (news.length === 0 && isLoading) return <Loader />;
 
   const item = {
     hidden: { opacity: 0, transition: { y: -300 } },
@@ -52,13 +54,12 @@ export const NewsList = () => {
         {news.map((news, index) => (
           <motion.div
             key={news.id}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.05 }}
             variants={item}
             initial="hidden"
             animate="show"
           >
-            <NewsCard index={index + 1} item={news} />
+            <NewsCard item={news} />
           </motion.div>
         ))}
       </Masonry>

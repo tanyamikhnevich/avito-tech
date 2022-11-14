@@ -3,7 +3,9 @@ import React from "react";
 import { useComments, useIsVisible } from "features/hooks";
 import { Avatar, Comments } from "widgets";
 
-import { Button, Group, Stack, Text } from "@mantine/core";
+import { Stack, Text } from "@mantine/core";
+import { useStyles } from "./comment.style";
+import { Button } from "shared/ui";
 
 interface Props {
   comment: GetByIdResponse;
@@ -15,43 +17,36 @@ export const Comment = ({ comment }: Props) => {
   const { relatedComments, error, isLoading, getAllComments } = useComments(
     comment.id
   );
-
-  if (error || isLoading) return <div>Loading</div>;
+  const { classes } = useStyles();
 
   return (
-    <div
-      key={comment.id}
-      style={{
-        border: "1px solid black",
-        borderRadius: "20px",
-        margin: "10px",
-        background: "white",
-      }}
-    >
-      <Stack m={20}>
+    <Stack spacing={0}>
+      <Stack
+        className={
+          (comment.kids && classes.containerWithButton) || classes.container
+        }
+      >
+        <Avatar id={comment.id} by={comment.by} />
         <Text size={15}>{comment.text}</Text>
-        <Group>
-          <Avatar id={comment.id} />
-          <Text fw={600} fs="italic">
-            {comment.by}
-          </Text>
-        </Group>
       </Stack>
-      <div style={{ margin: "10px 20px" }}>
+      <Stack align="flex-end">
         {comment.kids && (
-          <Text
-            variant="gradient"
-            gradient={{ from: "dark.9", to: "red.8" }}
-            size={15}
+          <Button
+            color="gray"
+            className={comment.kids && classes.button}
+            uppercase={false}
             onClick={() => {
               opened ? hide() : show(() => getAllComments(comment.id));
             }}
           >
-            {opened ? "Close" : "Show replies"}
-          </Text>
+            {opened ? "close" : "show replies"}
+          </Button>
         )}
-        {relatedComments && opened && <Comments comments={relatedComments} />}
-      </div>
-    </div>
+        {error && <Text>{error}</Text>}
+        {relatedComments && opened && !isLoading && (
+          <Comments comments={relatedComments} />
+        )}
+      </Stack>
+    </Stack>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@mantine/core";
+import { Button } from "shared/ui";
 
 import { useActions } from "features/hooks";
 
@@ -8,9 +8,9 @@ interface Props {
 }
 export const UpdateNewsButton = ({ loading }: Props) => {
   const { updateAllNews } = useActions();
-  function getNews() {
+  const getNews = () => {
     updateAllNews();
-  }
+  };
 
   return (
     <Button onClick={getNews} p={10} uppercase size="sm" loading={loading}>

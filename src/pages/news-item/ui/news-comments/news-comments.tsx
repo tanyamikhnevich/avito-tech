@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 
 import { useComments } from "features/hooks";
 import { Comments } from "widgets";
-import { Button, Group, Loader } from "@mantine/core";
+import { Loader } from "shared/ui";
+import { Button } from "shared/ui";
+
+import { Group, Stack, Text } from "@mantine/core";
 
 interface Props {
   id: number;
@@ -16,31 +19,22 @@ export const NewsComments = ({ id }: Props) => {
     getAllComments(id);
   }, []);
 
-  // if (error || isLoading) return <div>Loading</div>;
+  if (!relatedComments) return null;
+
+  if (error || isLoading) return <Loader />;
 
   function getComments() {
     getAllComments(id);
   }
 
   return (
-    <div>
-      {isLoading && <Loader color="red" size="xl" />}
-      {error && <div>{error}</div>}
-      <Group position={"right"}>
-        <Button
-          variant="gradient"
-          gradient={{ from: "dark.9", to: "red.8" }}
-          p={10}
-          radius="lg"
-          uppercase
-          size="md"
-          onClick={getComments}
-        >
-          Update comments
-        </Button>
+    <Stack>
+      {error && <Text>{error}</Text>}
+      <Group position="right">
+        <Button onClick={getComments}>Update comments</Button>
       </Group>
 
       {relatedComments && <Comments comments={relatedComments} />}
-    </div>
+    </Stack>
   );
 };

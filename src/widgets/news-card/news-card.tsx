@@ -1,25 +1,21 @@
 import { useHistory } from "react-router-dom";
-import { formatDistance } from "date-fns";
+
 import { Avatar } from "../avatar/avatar";
 import { type NewsTypes } from "entities/news/api";
+import { convertedTimeAgo } from "shared/utils/converted-time-ago";
 
 import { IconStar } from "@tabler/icons";
-import { Card, Group, Stack, Text, Title } from "@mantine/core";
+import { Card, Group, Space, Stack, Text, Title } from "@mantine/core";
 import { useStyles } from "./news-card.style";
 
 interface Props {
-  index: number;
   item: NewsTypes.GetByIdResponse;
 }
 
-export const NewsCard = ({ index, item }: Props) => {
+export const NewsCard = ({ item }: Props) => {
   const { by, time, title, score, id } = item;
   const { classes } = useStyles();
-
   const router = useHistory();
-  let convertedTime = formatDistance(time * 1000, Date.now(), {
-    addSuffix: true,
-  });
 
   return (
     <Card
@@ -27,7 +23,7 @@ export const NewsCard = ({ index, item }: Props) => {
       onClick={() => router.push(`/${id}`)}
       className={classes.container}
     >
-      <Stack p={8} align="stretch" justify="center">
+      <Stack p="sm" align="stretch" justify="center">
         <Title weight={500} order={3}>
           {title}
         </Title>
@@ -37,15 +33,11 @@ export const NewsCard = ({ index, item }: Props) => {
             {score} points
           </Text>
         </Group>
-        <Group>
-          <Avatar id={id} />
-
-          <Text size="sm" color="dimmed" fs="italic" fw={700}>
-            {by}
-          </Text>
-
+        <Space h="xs" />
+        <Group position="apart" align="flex-end">
+          <Avatar id={id} by={by} />
           <Text size="sm" color="dimmed" fs="italic">
-            {convertedTime}
+            {convertedTimeAgo(time)}
           </Text>
         </Group>
       </Stack>

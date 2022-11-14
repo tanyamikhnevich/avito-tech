@@ -14,13 +14,15 @@ export const Layout = ({ children }: Props) => {
         <Container size="xl" className={classes.header}>
           <Group position="apart" align="flex-end">
             <Title c="red.9" order={2}>
-              Fake News
+              Hacker News
             </Title>
             <Text c="gray.0">by T. Mikhnevich</Text>
           </Group>
         </Container>
       </Group>
-      <Container size="xl">{children}</Container>
+      <Container size="xl" w="100%">
+        {children}
+      </Container>
     </Stack>
   );
 };

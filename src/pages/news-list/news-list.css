@@ -1,6 +1,9 @@
 .my-masonry-grid {
   display: flex;
   width: auto;
+  margin-left: -16px ;
+  margin-right: -16px ;
+
 }
 .my-masonry-grid_column {
   background-clip: padding-box;

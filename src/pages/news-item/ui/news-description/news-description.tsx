@@ -1,34 +1,41 @@
-import { NewsTypes } from "entities/news";
-import { Avatar } from "../../../../widgets";
-import { Group, Stack, Text } from "@mantine/core";
+import { type NewsTypes } from "entities/news";
+import { Avatar } from "widgets";
+import { convertedTimeNow } from "shared/utils/converted-time-now";
+
+import { useStyles } from "./news-description.style";
+import { Group, Space, Stack, Text, Title } from "@mantine/core";
+import { IconMessage } from "@tabler/icons";
 
 export const NewsDescription = ({
   item,
 }: {
   item: NewsTypes.GetByIdResponse;
 }) => {
-  let date = new Date(item.time * 1000); // todo: date add time
+  const { classes } = useStyles();
 
   return (
-    <div>
-      <Stack bg={"gray.2"} p={10}>
-        <Text weight={500} size={25}>
-          {item.title}
-        </Text>
-        <Text size={20}>{item.url}</Text>
-        <Group>
-          <Avatar id={item.id} />
-          <Text fw={600} fs="italic">
-            {item.by}
+    <Stack className={classes.container}>
+      <Title order={1}>{item.title}</Title>
+      <Text color="gray.7" size="lg">
+        {item.url}
+      </Text>
+
+      <Space h="xs" />
+      <Group position="apart" align="flex-end">
+        <Avatar id={item.id} by={item.by} />
+
+        <Stack align="flex-end" spacing="xs">
+          <Text size="sm" color="dimmed" fs="italic">
+            {convertedTimeNow(item.time)}
           </Text>
-          <Text fw={600} fs="italic">
-            {date.toLocaleDateString("ru-Ru")}
-          </Text>
-        </Group>
-        <Text size={18} fs="italic">
-          See {item.descendants} comments
-        </Text>
-      </Stack>
-    </div>
+          <Group>
+            <IconMessage size={16} stroke={3} color="red" />
+            <Text size="sm" color="red" fs="italic" fw={700}>
+              {item.descendants} comments
+            </Text>
+          </Group>
+        </Stack>
+      </Group>
+    </Stack>
   );
 };

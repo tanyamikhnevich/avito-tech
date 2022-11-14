@@ -10,7 +10,7 @@ export const getAllNews = createAsyncThunk<INewsItem[]>(
     try {
       const { data } = await newsApi.getNewsIds();
 
-      const promises = data.slice(0, 30).map((id) => newsApi.getById(id));
+      const promises = data.slice(0, 100).map((id) => newsApi.getById(id));
       const res = await Promise.all(promises);
 
       return res.map((res) => res.data);
@@ -37,8 +37,8 @@ export const updateAllNews = createAsyncThunk<INewsItem[]>(
   async (_, thunkAPI) => {
     try {
       const { data } = await newsApi.getNewsIds();
-      thunkAPI.dispatch(clearStateComments);
-      thunkAPI.dispatch(clearStateAvatars);
+      thunkAPI.dispatch(clearStateComments());
+      thunkAPI.dispatch(clearStateAvatars());
       const promises = data.slice(0, 100).map((id) => newsApi.getById(id));
       const res = await Promise.all(promises);
 

@@ -4,9 +4,9 @@ import { Link, useParams } from "react-router-dom";
 import { useActions, useAppSelector } from "features/hooks";
 import { PUBLIC_PATH } from "shared/config";
 import { NewsComments, NewsDescription } from "./ui";
+import { Button, Loader } from "shared/ui";
 
-import styles from "./news-item.module.scss";
-import { Button, Group } from "@mantine/core";
+import { Group, Stack } from "@mantine/core";
 import { IconHome2 } from "@tabler/icons";
 
 type TParams = { id?: string | undefined };
@@ -25,28 +25,20 @@ export const NewsItem = () => {
     getNewsById(Number(id));
   }, []);
 
-  if (!item || isLoading || error) return <div>Loading</div>;
+  if (!item || isLoading || error) return <Loader />;
 
   return (
-    <div className={styles.container}>
-      <Group position={"right"}>
-        <Button
-          variant="gradient"
-          gradient={{ from: "dark.9", to: "red.8" }}
-          p={10}
-          radius="lg"
-          uppercase
-          size="md"
-        >
-          <IconHome2 size={16} stroke={1.5} />
-          <Link to={PUBLIC_PATH.NEWS_LIST} className={styles.link}>
+    <Stack>
+      <Group position="right">
+        <Link to={PUBLIC_PATH.NEWS_LIST}>
+          <Button leftIcon={<IconHome2 size={16} stroke={1.5} />}>
             TO NEWS
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </Group>
 
       <NewsDescription item={item} />
       <NewsComments id={item.id} />
-    </div>
+    </Stack>
   );
 };

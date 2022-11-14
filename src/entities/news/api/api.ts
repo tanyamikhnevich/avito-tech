@@ -12,6 +12,5 @@ export const getById = (
 export const getNewsIds = (): Promise<
   AxiosResponse<NewsTypes.GetNewsIdsResponse>
 > => {
-  return api.get<NewsTypes.GetNewsIdsResponse>("/topstories.json?print=pretty");
+  return api.get<NewsTypes.GetNewsIdsResponse>("/newstories.json?print=pretty");
 };
-// todo newstories
