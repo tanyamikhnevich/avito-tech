@@ -1,2 +1,2 @@
 # avito-tech
-Test task for Avito (Fake News)
+Test task for Avito (Hacker News)
